@@ -1,8 +1,8 @@
-import testing.Test
+import spock.lang.Specification
+import testing.NameRepository
+import testing.NameService
 
-class HelloSpockSpec extends spock.lang.Specification {
-
-    def tester = Mock(Test)
+class HelloSpockSpec extends Specification {
 
     def "length of Spock's and his friends' names"() {
         expect:
@@ -15,13 +15,16 @@ class HelloSpockSpec extends spock.lang.Specification {
         "Scotty" | 6
     }
 
-    def "test must return true"() {
+    def nameRepository = Mock(NameRepository)
+    def nameService = new NameService(nameRepository: nameRepository)
+
+    def "test mocking class collaborator"() {
         when:
-        def result = tester.execute()
+        def name = nameService.getName()
 
         then:
-        1 * tester.execute() >> true
-        result == true
+        1 * nameRepository.getName() >> "test name"
+        name == "test name"
 
     }
 
