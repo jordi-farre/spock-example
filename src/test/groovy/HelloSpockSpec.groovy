@@ -15,6 +15,15 @@ class HelloSpockSpec extends Specification {
         "Scotty" | 6
     }
 
+    def "length of Spock's and his friends' names in another way"() {
+        expect:
+        name.size() == length
+
+        where:
+        name << ["Spock", "Kirk", "Scotty"]
+        length << [5, 4, 6]
+    }
+
     def nameRepository = Mock(NameRepository)
     def nameService = new NameService(nameRepository: nameRepository)
 
